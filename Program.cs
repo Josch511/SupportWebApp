@@ -1,9 +1,13 @@
 using SupportWebApp.Components;
+using SupportWebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<CosmosDbService>();
+
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder.Services
+    .AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();

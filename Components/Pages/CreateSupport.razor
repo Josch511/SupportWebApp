@@ -1,0 +1,50 @@
+﻿@page "/support/create"
+@rendermode InteractiveServer
+@using SupportWebApp.Models
+@using SupportWebApp.Services
+@inject CosmosDbService CosmosDb
+
+<h1>Ny supporthenvendelse</h1>
+
+<EditForm Model="message" OnValidSubmit="CreateAsync" FormName="support">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>Navn: <InputText @bind-Value="message.Name" /></p>
+    <p>Email: <InputText @bind-Value="message.Email" /></p>
+    <p>Telefon: <InputText @bind-Value="message.Phone" /></p>
+
+    <p>
+        Kategori:
+        <InputSelect @bind-Value="message.Category">
+            <option value="">Vælg</option>
+            <option value="salg">Salg</option>
+            <option value="teknisk">Teknisk</option>
+            <option value="reservedele">Reservedele</option>
+        </InputSelect>
+    </p>
+
+    <p>
+        Beskrivelse:
+        <InputTextArea @bind-Value="message.Description" />
+    </p>
+
+    <button type="submit">Opret henvendelse</button>
+</EditForm>
+
+@if (saved)
+{
+    <p>Henvendelsen blev gemt.</p>
+}
+
+@code {
+    private SupportMessage message = new();
+    private bool saved;
+
+    private async Task CreateAsync()
+    {
+        await CosmosDb.AddAsync(message);
+        message = new();
+        saved = true;
+    }
+}
