@@ -1,0 +1,32 @@
+﻿@page "/support"
+@rendermode InteractiveServer
+@using SupportWebApp.Models
+@using SupportWebApp.Services
+@inject CosmosDbService CosmosDb
+
+<h1>Supporthenvendelser</h1>
+
+@if (messages is null)
+{
+    <p>Henter data...</p>
+}
+else
+{
+    <ul>
+        @foreach (var message in messages)
+        {
+            <li>
+                @message.Name – @message.Category – @message.Description
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<SupportMessage>? messages;
+
+    protected override async Task OnInitializedAsync()
+    {
+        messages = await CosmosDb.GetAllAsync();
+    }
+}
