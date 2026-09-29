@@ -24,7 +24,7 @@ Kør i projektmappen:
 dotnet user-secrets set "CosmosDb:ConnectionString" "CONNECTION_STRING"
 dotnet user-secrets set "CosmosDb:DatabaseName" "SupportDB"
 dotnet user-secrets set "CosmosDb:ContainerName" "SupportMessages"
-dotnet run --environment Development
+dotnet run
 ```
 
 Connection string gemmes lokalt og skal ikke på GitHub.
